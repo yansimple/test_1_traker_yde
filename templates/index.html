@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Campaigns</h2>
+        <a href="{{ url_for('new_campaign') }}" class="btn btn-primary mb-2">New Campaign</a>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Links</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for campaign in campaigns %}
+                    <tr>
+                        <td>{{ campaign.id }}</td>
+                        <td>{{ campaign.name }}</td>
+                        <td>
+                            <ul>
+                                {% for link in campaign.links %}
+                                    <li><a href="{{ url_for('track_click', link_id=link.id) }}" target="_blank">{{ link.url }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('new_link', campaign_id=campaign.id) }}" class="btn btn-sm btn-success">Add Link</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
